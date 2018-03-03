@@ -1,8 +1,26 @@
 # Tugas Sesi Lab Modul 1
 
+__SOAL__
+
 1. Buat vagrant virtualbox dan buat user 'awan' dengan password 'buayakecil'
 
+__JAWAB__
+
+Untuk menambahkan *user* pada Ubuntu dapat dilakukan dengan perintah `useradd` atau `adduser`. Perbedaannya adalah `adduser` secara *default* membuat direktori *home* bagi *user* tsb, sedangkan `useradd` tidak. Pada kasus ini kami menggunakan perintah `adduser`. Masalah yang dihadapi ketika membuat *user* adalah (1) harus memasukkan *password* dan (2) [GECOS field](https://en.wikipedia.org/wiki/Gecos_field), yaitu informasi tambahan seputar nama lengkap, alamat, dll, keduanya tanpa mengetikkannya secara manual ketika diminta oleh proses. Oleh karena itu *script provisioning* yang kami gunakan adalah seperti berikut:
+
+```
+echo -e "buayakecil\nbuayakecil\n" | adduser --gecos "" awan
+```
+
+Masalah (1) diselesaikan dengan melakukan `echo`. Karena *password* akan diminta dua kali, maka kami menggunakan opsi `-e` agar `\n` dapat diinterpretasikan sebagai *enter*. Perintah ini kemudian di-*pipe* dengan `adduser`. Masalah (2) diselesaikan dengan menambahkan opsi `--gecos` yang pada dokumentasi `adduser` memungkinkan kita untuk memasukkan informasi pada GECOS field lebih dulu sehingga nanti tidak diminta lagi. Berikut ini hasil yang didapat ketika menjalankan *provisioning*:
+
+![1](/files/images/1.png)
+
+__SOAL__
+
 2. Buat vagrant virtualbox dan lakukan provisioning install Phoenix Web Framework
+
+__SOAL__
 
 3. Buat vagrant virtualbox dan lakukan provisioning install:
 	1. php
@@ -12,9 +30,13 @@
 	
 	Setelah melakukan provisioning, clone https://github.com/fathoniadi/pelatihan-laravel.git pada folder yang sama dengan vagrantfile di komputer host. Setelah itu sinkronisasi folder pelatihan-laravel host ke vagrant ke **/var/www/web** dan jangan lupa install vendor laravel agar dapat dijalankan. Setelah itu setting root document nginx ke **/var/www/web**. webserver VM harus dapat diakses pada port 8080 komputer host dan mysql pada vm dapat diakses pada port 6969 komputer host
 
+__SOAL__
+
 4. Buat vagrant virtualbox dan lakukan provisioning install:
 	1. Squid Proxy
 	2. Bind9
+
+__JAWAB__
 
 Untuk melakukan provisioning install Squid Proxy dan Bind9 langkah yang diperlukan adalah dengan menghilangkan comment mulai baris `config.vm.provision "shell", inline: <<-SHELL` hingga `SHELL` dan mengganti perintah yang ada di dalamnya menjadi:
 
