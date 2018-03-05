@@ -1,15 +1,17 @@
 # Tugas Sesi Lab Modul 1
 
+Semua *provisioning script* di bawah dilakukan dengan tambahan konfigurasi `privileged: false`
+
 __SOAL__
 
 1. Buat vagrant virtualbox dan buat user 'awan' dengan password 'buayakecil'
 
 __JAWAB__
 
-Untuk menambahkan *user* pada Ubuntu dapat dilakukan dengan perintah `useradd` atau `adduser`. Perbedaannya adalah `adduser` secara *default* membuat direktori *home* bagi *user* tsb, sedangkan `useradd` tidak. Pada kasus ini kami menggunakan perintah `adduser`. Masalah yang dihadapi ketika membuat *user* adalah (1) harus memasukkan *password* dan (2) [GECOS field](https://en.wikipedia.org/wiki/Gecos_field), yaitu informasi tambahan seputar nama lengkap, alamat, dll, keduanya tanpa mengetikkannya secara manual ketika diminta oleh proses. Oleh karena itu *script provisioning* yang kami gunakan adalah seperti berikut:
+Untuk menambahkan *user* pada Ubuntu dapat dilakukan dengan perintah `useradd` atau `adduser`. Perbedaannya adalah `adduser` secara *default* membuat direktori *home* bagi *user* tsb, sedangkan `useradd` tidak. Pada kasus ini kami menggunakan perintah `adduser`. Masalah yang dihadapi ketika membuat *user* adalah (1) harus memasukkan *password* dan (2) [GECOS field](https://en.wikipedia.org/wiki/Gecos_field), yaitu informasi tambahan seputar nama lengkap, alamat, dll, keduanya tanpa mengetikkannya secara manual ketika diminta oleh proses. Oleh karena itu *provisioning script* yang kami gunakan adalah seperti berikut:
 
 ```
-echo -e "buayakecil\nbuayakecil\n" | adduser --gecos "" awan
+echo -e "buayakecil\nbuayakecil\n" | sudo adduser --gecos "" awan
 ```
 
 Masalah (1) diselesaikan dengan melakukan `echo`. Karena *password* akan diminta dua kali, maka kami menggunakan opsi `-e` agar `\n` dapat diinterpretasikan sebagai *enter*. Perintah ini kemudian di-*pipe* dengan `adduser`. Masalah (2) diselesaikan dengan menambahkan opsi `--gecos` yang pada dokumentasi `adduser` memungkinkan kita untuk memasukkan informasi pada GECOS field lebih dulu sehingga nanti tidak diminta lagi. Berikut ini hasil yang didapat ketika menjalankan *provisioning*:
@@ -19,6 +21,29 @@ Masalah (1) diselesaikan dengan melakukan `echo`. Karena *password* akan diminta
 __SOAL__
 
 2. Buat vagrant virtualbox dan lakukan provisioning install Phoenix Web Framework
+
+__JAWAB__
+
+Script provisioning:
+
+```
+# Dependensi utama untuk Framework Phoenix adalah elixir dan erlang
+wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+sudo apt-get update
+sudo apt-get install elixir esl-erlang -y
+
+# Memastikan UTF8 sebagai native name encoding
+sudo update-locale LC_ALL=en_US.UTF-8
+
+# Setelah melakukan instalasi elixir, perlu juga menginstall Hex package manager
+mix local.hex
+
+# Install Phoenix archive
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+
+# Dependensi bagi OS Linux untuk live code reloading
+sudo apt-get install inotify-tools -y
+```
 
 __SOAL__
 
@@ -38,7 +63,7 @@ __SOAL__
 
 __JAWAB__
 
-Untuk melakukan provisioning install Squid Proxy dan Bind9 langkah yang diperlukan adalah dengan menghilangkan comment mulai baris `config.vm.provision "shell", inline: <<-SHELL` hingga `SHELL` dan mengganti perintah yang ada di dalamnya menjadi:
+Untuk melakukan provisioning install Squid Proxy dan Bind9, :
 
 ```
 sudo apt-get update
