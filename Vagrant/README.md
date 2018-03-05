@@ -36,10 +36,11 @@ sudo apt-get install elixir esl-erlang -y
 sudo update-locale LC_ALL=en_US.UTF-8
 
 # Setelah melakukan instalasi elixir, perlu juga menginstall Hex package manager
-mix local.hex
+# Karena nantinya butuh konfirmasi, maka di-pipe dengan "yes"
+yes | mix local.hex
 
 # Install Phoenix archive
-mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+yes | mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
 
 # Dependensi bagi OS Linux untuk live code reloading
 sudo apt-get install inotify-tools -y
