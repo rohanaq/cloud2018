@@ -6,7 +6,7 @@ sudo apt-get install -y zip unzip python-software-properties software-properties
 # MySQL Installation
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password cloud"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password cloud"
-sudo apt-get install -y mysql-server
+sudo apt-get install -y mysql-server mysql-client
 
 # Creating the Database
 mysql -u root -pcloud -e "CREATE DATABASE cloud;"

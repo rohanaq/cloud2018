@@ -69,7 +69,7 @@ sudo apt-get install -y zip unzip python-software-properties software-properties
 # MySQL Installation
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password cloud"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password cloud"
-sudo apt-get install -y mysql-server
+sudo apt-get install -y mysql-server mysql-client
 
 # Creating the Database
 mysql -u root -pcloud -e "CREATE DATABASE cloud;"
@@ -145,6 +145,15 @@ Untuk mengecek apakah konfigurasi sudah benar, akses pada browser IP Private yan
 
 __Note:__
 Aplikasi Web yang disediakan memang belum benar sehingga pada browser akan muncul seperti gambar di atas.
+
+Untuk mengatur MySQL agar bisa diremote:
+```bash
+sed -i '43s/.*/bind-address  = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+service mysql restart
+```
+
+Koneksi dengan MySQL dapat dilakukan dengan `
+mysql -u root -p --host [IP_HOST] --port 6969 `
 
 __SOAL 4__
 
