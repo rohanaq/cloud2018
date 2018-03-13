@@ -99,6 +99,12 @@ config.vm.synced_folder "pelatihan-laravel/", "/var/www/web", id: "vagrant-root"
 	mount_options: ["dmode=775,fmode=664"]
 ```
 
+Untuk melakukan port forwarding HTTP dan MySQL, pada file Vagrantfile, tambahkan:
+```ruby
+config.vm.network "forwarded_port", guest: 80, host: 8080
+config.vm.network "forwarded_port", guest: 3306, host: 6969
+```
+
 Pada file __/etc/nginx/sites-available/default__, konfigurasinya diedit sehingga menjadi:
 ```
 server {
@@ -137,7 +143,7 @@ Untuk mengecek apakah konfigurasi sudah benar, akses pada browser IP Private yan
 ![3](files/images/3.png)
 
 __Note:__
-Aplikasi Web yang disediakan memang error sehingga pada browser akan muncul seperti gambar di atas.
+Aplikasi Web yang disediakan memang belum benar sehingga pada browser akan muncul seperti gambar di atas.
 
 __SOAL 4__
 
