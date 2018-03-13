@@ -82,7 +82,7 @@ sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
 
 # PHP Installation
-sudo apt-get install php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip
+sudo apt-get install -y php7.1 php7.1-xml php7.1-mbstring php7.1-mysql php7.1-json php7.1-curl php7.1-cli php7.1-common php7.1-mcrypt php7.1-gd libapache2-mod-php7.1 php7.1-zip
 
 # Composer Installation
 curl -sS https://getcomposer.org/installer | php
@@ -135,7 +135,9 @@ server {
 }
 ```
 
-Setelah itu jalankan `service nginx restart` dan `service php7.1-fpm restart`. Setelah melakukan restart pada web server, pindah ke direktori __/var/www/web__ dan jalankan `composer install`.
+Karena secara default terdapat Web Server apache pada VM, matikan service apache dengan `sudo service apache2 stop`.
+
+Setelah itu jalankan `sudo service nginx restart` dan `sudo service php7.1-fpm restart`. Setelah melakukan restart pada web server, pindah ke direktori __/var/www/web__ dan jalankan `composer install`.
 
 Setelah menjalankan `composer install` copykan file __.env.example__ dan ubah namanya menjadi __.env__ pada folder yang sama. Kemudian sesuaikan konfigurasi dalam file __.env__ sesuai nama database, user, dan password yang sudah ditentukan sewaktu provisioning install. Kemudian jalankan `php artisan key:generate` lalu `php artisan migrate`.
 
