@@ -15,3 +15,4 @@ Soal :
 
 ### Jawaban
 1. [Soal 1](/Nginx/1)
+2. [Soal 2](/Nginx/2)

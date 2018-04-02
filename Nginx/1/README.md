@@ -1,8 +1,9 @@
 ## Soal 1
 
-__Deskripsi soal:__
-Lakukan soal nomor 1 dan dokumentasikan bagaimana cara setupnya pada laporan markdown.
+### Deskripsi Soal
+1. Buatlah Vagrantfile sekaligus provisioning-nya untuk menyelesaikan kasus.
 
+### STEP
 1. Vagrant box yang digunakan adalah `ubuntu/xenial64`
 2. VM menggunakan private network
 - __192.168.0.2__ IP Load Blancer
@@ -14,7 +15,7 @@ sudo apt-get update
 sudo apt-get install -y php7.0 php7.0-cgi php7.0-fpm nginx
 ```
 4. Konfigurasi pada VM
-- Pada __/etc/nginx/sites-available/default__ ubah konfigurasinya menjadi:
+Pada __/etc/nginx/sites-available/default__ ubah konfigurasinya menjadi:
 ```
 server {
         listen 80 default_server;
@@ -46,18 +47,18 @@ server {
 ```
 Untuk mengaktifkan suatu konfigurasi ketikkan perintah `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`
 
-- Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
+Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
 
-- Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
+Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
 
-- Jangan lupa restart Nginx dan php-fpm
+Jangan lupa restart Nginx dan php-fpm
 ```
 sudo service nginx restart
 sudo service php7.0-fpm restart
 ```
 
 5. Menjadikan VM sebagai Load Balancer:
-- Pada __/etc/nginx/sites-available/default__ tambahkan konfigurasi berikut sebelum segmen server sehingga konfigurasi akhir menjadi:
+Pada __/etc/nginx/sites-available/default__ tambahkan konfigurasi berikut sebelum segmen server sehingga konfigurasi akhir menjadi:
 ```
 # INI BUAT LOAD BALANCER
 upstream worker {
