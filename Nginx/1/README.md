@@ -5,9 +5,9 @@ Lakukan soal nomor 1 dan dokumentasikan bagaimana cara setupnya pada laporan mar
 
 1. Vagrant box yang digunakan adalah `ubuntu/xenial64`
 2. VM menggunakan private network
-        - __192.168.0.2__ IP Load Blancer
-        - __192.168.0.3__ IP Worker 1
-        - __192.168.0.4__ IP Worker 2
+- __192.168.0.2__ IP Load Blancer
+- __192.168.0.3__ IP Worker 1
+- __192.168.0.4__ IP Worker 2
 3. Script provisioning:
 ```bash
 sudo apt-get update
@@ -45,6 +45,7 @@ server {
 }
 ```
 Untuk mengaktifkan suatu konfigurasi ketikkan perintah `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`
+
 - Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
 
 - Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
