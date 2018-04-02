@@ -14,4 +14,4 @@ Soal :
 2. Untuk nomor 2 dan 3 merupakan analisa terhadap suatu masalah, jawablah pertanyaan diatas dan tulis pada laporan.
 
 ### Jawaban
-1. [Soal 1](/1)
+1. [Soal 1](/Nginx/1)
