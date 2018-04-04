@@ -23,53 +23,8 @@ sudo apt-get update
 sudo apt-get install -y php7.0 php7.0-cgi php7.0-fpm apache2
 ```
 
-5. Konfigurasi pada VM
+5. Konfigurasi pada VM yang dijadikan Load Balancer:
 Pada __/etc/nginx/sites-available/default__ ubah konfigurasinya menjadi:
-```
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-
-        root /var/www/html;
-
-        index index.php index.html index.htm index.nginx-debian.html;
-
-        server_name _;
-
-        location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ =404;
-                proxy_pass http://worker;
-        }
-
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_pass 127.0.0.1:9000;
-
-        }
-
-        location ~ /\.ht {
-                deny all;
-        }
-}
-```
-
-Untuk mengaktifkan suatu konfigurasi ketikkan perintah `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`
-
-Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
-
-Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
-
-Jangan lupa restart Nginx dan php-fpm
-```
-sudo service nginx restart
-sudo service php7.0-fpm restart
-```
-
-6. Menjadikan VM sebagai Load Balancer:
-
-Pada __/etc/nginx/sites-available/default__ tambahkan konfigurasi berikut sebelum segmen server sehingga konfigurasi akhir menjadi:
 ```
 # INI BUAT LOAD BALANCER
 upstream worker {
@@ -124,4 +79,16 @@ upstream worker {
 }
 ```
 
-7. Membuat file index.php pada Worker 1 dan Worker 2 untuk testing.
+Untuk mengaktifkan suatu konfigurasi ketikkan perintah `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`
+
+Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
+
+Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
+
+Jangan lupa restart Nginx dan php-fpm
+```
+sudo service nginx restart
+sudo service php7.0-fpm restart
+```
+
+6. Membuat file index.php pada Worker 1 dan Worker 2 untuk testing.
