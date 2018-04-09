@@ -1,4 +1,4 @@
-## Soal 1
+## Soal 2
 
 ### Deskripsi Soal:
 2. Analisa apa perbedaan antara ketiga algoritma tersebut.
