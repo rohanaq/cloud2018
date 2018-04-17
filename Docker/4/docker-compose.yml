@@ -1,17 +1,6 @@
-version: '1.0.0'
+version: '3'
 
 services:
-  db:
-    image: mysql:5.7
-    volumes:
-      - reservasi:/var/www/reservasi
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD xyz
-      MYSQL_USER userawan
-      MYSQL_PASSWORD buayakecil
-      MYSQL_DATABASE reservasi
-
   flask:
     depends_on:
       - db
@@ -20,7 +9,33 @@ services:
       - reservasi:/var/www/reservasi
     restart: always
     environment:
-      DB_HOST db:3306
-      DB_USERNAME userawan
-      DB_PASSWROD buayakecil
-      DB_NAME reservasi
+      DB_HOST: 172.20.0.25:3306
+      DB_USERNAME: userawan
+      DB_PASSWORD: buayakecil
+      DB_NAME: reservasi
+    networks:
+      docker1:
+        ipv4_address: 172.20.0.24
+
+  db:
+    image: mysql_reservasi
+#    volumes:
+#      - "reservasi:/var/www/reservasi"
+    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: xyz
+#      MYSQL_USER: userawan
+#      MYSQL_PASSWORD: buayakecil
+#      MYSQL_DATABASE: reservasi
+    networks:
+      docker1:
+        ipv4_address: 172.20.0.25
+
+volumes:
+  reservasi:
+
+networks:
+  docker1:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

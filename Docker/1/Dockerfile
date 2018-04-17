@@ -11,3 +11,4 @@ RUN pip install -r req.txt
 
 CMD python server.py
 
+EXPOSE 80
