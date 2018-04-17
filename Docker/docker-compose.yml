@@ -59,7 +59,7 @@ services:
 
   db:
     image: mysql_reservasi
-    # restart: always
+    restart: always
     networks:
       docker1:
         ipv4_address: 172.20.0.25
