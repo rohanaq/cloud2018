@@ -5,11 +5,9 @@ services:
     depends_on:
       - db
     image: reservasi
-    volumes:
-      - reservasi:/var/www/reservasi
     restart: always
     environment:
-      DB_HOST: 172.20.0.25:3306
+      DB_HOST: 172.20.0.25
       DB_USERNAME: userawan
       DB_PASSWORD: buayakecil
       DB_NAME: reservasi
@@ -19,14 +17,7 @@ services:
 
   db:
     image: mysql_reservasi
-#    volumes:
-#      - "reservasi:/var/www/reservasi"
     restart: always
-#    environment:
-#      MYSQL_ROOT_PASSWORD: xyz
-#      MYSQL_USER: userawan
-#      MYSQL_PASSWORD: buayakecil
-#      MYSQL_DATABASE: reservasi
     networks:
       docker1:
         ipv4_address: 172.20.0.25
