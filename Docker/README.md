@@ -21,6 +21,7 @@ EXPOSE 80
 ```
 
 Buat image dengan menggunakan perintah 
+
 `docker build -t reservasi`
 
 
@@ -38,6 +39,7 @@ COPY ./reservasi.sql /docker-entrypoint-initdb.d
 ```
 
 Buat image dengan perintah
+
 `docker build -t mysql_reservasi`
 
 2. Membuat `docker-compose.yml`. Di sini kami menggunakan IP static untuk database, worker, dan juga load balancer.
