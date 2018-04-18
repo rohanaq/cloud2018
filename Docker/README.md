@@ -3,7 +3,7 @@
 1. Membuat Dockerfile untuk nomor 1 dan 4
 
 __Dockerfile Nomor 1__
-```
+```dockerfile
 FROM ubuntu:16.04
 
 RUN apt update && apt install -y wget apt-utils zip python2.7 python-pip
@@ -25,7 +25,7 @@ Buat image dengan menggunakan perintah
 
 
 __Dockerfile Nomor 4__
-```
+```dockerfile
 FROM mysql:5.7
 
 ENV MYSQL_ROOT_PASSWORD xyz
@@ -41,7 +41,7 @@ Buat image dengan perintah
 `docker build -t mysql_reservasi`
 
 2. Membuat `docker-compose.yml`. Di sini kami menggunakan IP static untuk database, worker, dan juga load balancer.
-```
+```yml
 version: '3'
 
 services:
