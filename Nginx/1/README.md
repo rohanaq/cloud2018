@@ -14,17 +14,20 @@
 3. Script provisioning untuk Load Balancer:
 ```bash
 sudo apt-get update
-sudo apt-get install -y php7.0 php7.0-cgi php7.0-fpm nginx
+sudo apt-get install -y nginx
+sudo service nginx restart
 ```
 
 4. Script provisioning untuk Worker:
 ```bash
 sudo apt-get update
-sudo apt-get install -y php7.0 php7.0-cgi php7.0-fpm apache2
+sudo apt-get install -y php7.0 php7.0-cgi php7.0-cli apache2 libapache2-php7.0
+sudo a2enmod libapache2-php7.0
+sudo service apache2 restart
 ```
 
-5. Konfigurasi pada VM yang dijadikan Load Balancer:
-Pada __/etc/nginx/sites-available/default__ ubah konfigurasinya menjadi:
+5. Untuk konfigurasi pada VM yang dijadikan Load Balancer, kami menggunakan fitur sync folder dari vagrant:
+Pada __/etc/nginx/sites-enabled/default__ konfigurasinya menjadi:
 ```
 # INI BUAT LOAD BALANCER
 upstream worker {
@@ -77,18 +80,6 @@ upstream worker {
    server 192.168.0.3;
    server 192.168.0.4;
 }
-```
-
-Untuk mengaktifkan suatu konfigurasi ketikkan perintah `sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/`
-
-Pada __/etc/php/7.0/fpm/php.ini__, ubah baris yang berisi `#cgi.fix_pathinfo=1` menjadi `cgi.fix_pathinfo=0`
-
-Pada __/etc/php/7.0/fpm/pool.d/www.conf__, comment baris yang berisi `listen = /run/php/php7.0-fpm.sock` kemudian tambahkan `listen = 127.0.0.1:9000` pada baris setelahnya
-
-Jangan lupa restart Nginx dan php-fpm
-```
-sudo service nginx restart
-sudo service php7.0-fpm restart
 ```
 
 6. Membuat file index.php pada Worker 1 dan Worker 2 untuk testing.

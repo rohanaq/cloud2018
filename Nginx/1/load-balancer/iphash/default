@@ -1,0 +1,32 @@
+upstream worker {
+	ip_hash;
+	server 192.168.0.3;
+	server 192.168.0.4;
+}
+
+server {
+        listen 80 default_server;
+
+	root /var/www/html;
+
+        index index.php index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+                proxy_pass http://worker;
+        }
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass 127.0.0.1:9000;
+
+        }
+
+        location ~ /\.ht {
+                deny all;
+        }
+}
