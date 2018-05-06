@@ -1,0 +1,16 @@
+- name: Install nginx
+  apt: name=nginx
+
+- name: Create directory
+  file: 
+    path: /var/www
+    state: directory
+
+- name: Template sites config
+  template:
+    src: "{{ sites }}"
+    dest: /etc/nginx/sites-available
+  notify:
+    - disable default sites
+    - enable sites
+    - restart nginx

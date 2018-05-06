@@ -1,0 +1,7 @@
+- name: update repo
+  command: apt update
+
+- name: restart php-fpm
+  service:
+    name: php7.2-fpm
+    state: restarted

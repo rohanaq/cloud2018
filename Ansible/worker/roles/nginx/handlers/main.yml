@@ -1,0 +1,15 @@
+- name: disable default sites
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+
+- name: enable sites
+  file:
+    src: "/etc/nginx/sites-available/{{ sites }}"
+    dest: "/etc/nginx/sites-enabled/{{ sites }}"
+    state: link
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted

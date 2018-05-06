@@ -1,0 +1,8 @@
+- name: Install composer
+  apt: name=composer
+
+- name: Run composer install
+  composer:
+    command: install
+    working_dir: /var/www/hackathon
+

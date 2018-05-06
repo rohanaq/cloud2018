@@ -1,0 +1,35 @@
+- name: Install git
+  apt: name=git
+
+- name: Checking if apps exists
+  stat:
+    path: "{{ path_to_app }}"
+  register: stat_result
+
+- name: Clone repo
+  git:
+    repo: 'https://{{ user_git }}@github.com/udinIMM/Hackathon.git'
+    dest: "{{ path_to_app }}"
+  when: stat_result.stat.exists == False
+
+- name: Copy file .env
+  template:
+    src: hackathon/.env
+    dest: "{{ path_to_app }}"
+  vars:
+    db_host: 192.168.56.56
+    db_name: hackathon
+    db_user: regal
+    db_pass: bolaubi
+
+- name: Storage access
+  file:
+    path: "{{ path_to_app }}/storage"
+    mode: 0777
+    recurse: yes
+
+- name: Bootstrap/cache access
+  file:
+    path: "{{ path_to_app }}/bootstrap/cache"
+    mode: 0777
+    recurse: yes
