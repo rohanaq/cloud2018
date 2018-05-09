@@ -17,7 +17,7 @@
     src: hackathon/.env
     dest: "{{ path_to_app }}"
   vars:
-    db_host: 192.168.56.56
+    db_host: 10.151.36.185
     db_name: hackathon
     db_user: regal
     db_pass: bolaubi

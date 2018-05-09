@@ -1,3 +1,6 @@
+[db]
+db ansible_host=10.151.36.185 ansible_ssh_user=ubuntu ansible_become_pass=ubuntu
+
 [worker]
-node1 ansible_host=192.168.56.101 ansible_ssh_user=jon ansible_become_pass=a
-node2 ansible_host=192.168.56.102 ansible_ssh_user=jon ansible_become_pass=a
+node1 ansible_host=10.151.36.187 ansible_ssh_user=ubuntu ansible_become_pass=ubuntu
+node2 ansible_host=10.151.36.188 ansible_ssh_user=ubuntu ansible_become_pass=ubuntu

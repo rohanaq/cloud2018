@@ -7,7 +7,7 @@
 
 3. Pada worker:
     2.1. Install Nginx
-    2,2, Install PHP 7.2
+    2.2. Install PHP 7.2
     2.3. Install composer
     2.4. Install Git
 
@@ -16,3 +16,5 @@
 4. Clone [https://github.com/udinIMM/Hackathon](https://github.com/udinIMM/Hackathon) pada setiap worker dan setup database pada .env mengarah ke DB server.
 
 5. Setup root directory nginx ke folder Laravel hasil clone repo diatas
+
+## Penyelesaian
