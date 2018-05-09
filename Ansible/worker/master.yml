@@ -3,13 +3,11 @@
   pre_tasks:
     - name: uninstall apache2
       apt: name=apache2 state=absent
-
   roles:
     - { role: php7.2 }
     - { role: nginx }
     - { role: git }
     - { role: composer }
-
   vars:
     proxy_env: 'http://ITS-552131-cb09f:6aea3@proxy.its.ac.id:8080'
     sites: hackathon
